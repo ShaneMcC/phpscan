@@ -9,11 +9,10 @@
 		$files = array();
 		exec('egrep -lRiI --include "*.txt"  \''.escapeshellcmd($query).'\' '.dirname(__FILE__).' | sort', $output);
 		foreach ($output as $line) {
-			$files[]['name'] = preg_replace('#.txt$#', '', $line);
+			$files[]['name'] = preg_replace('#.(gocr|tesseract).txt$#', '', $line);
 		}
 
 		showItems($files);
-		// var_dump($files);
 	} else {
 		echo 'No search query specified.';
 	}

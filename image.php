@@ -4,7 +4,8 @@
 	if ($file == '') { die('No File ('.$file.')'); }
 	$file = str_replace('../', '', $file);
 	$file = str_replace('..\\', '', $file);
-	if (!file_exists(dirname(__FILE__) . '/' . $file)) { die('No Such File'); }
+	$fullname = dirname(__FILE__) . '/' . $file;
+	if (!file_exists($fullname)) { die('No Such File'); }
 	
 	$name = explode('.', $file);
 	$ext = array_pop($name);
@@ -17,8 +18,14 @@
 //	$data = nl2br($data);
 	
 	doHeader('Image: '.$file);
+
+	$ocrs = array();
+	if (file_exists($fullname.'.tesseract.txt')) { $ocrs[] = 'T'; }
+	if (file_exists($fullname.'.gocr.txt')) { $ocrs[] = 'G'; }
+	
 	echo '	<div class="actions">';
-	echo '	<a href="ocr.php?img=', $name, '.', $ext, '">View OCR</a>';
+	echo '	<a href="ocr.php?img=', $name, '.', $ext, '">View OCR</a> (', implode('/', $ocrs), ')';
+	echo ' - ';
 	echo '  <a href="pdf.php?img=', $name, '.', $ext, '">Download PDF</a>';
 	echo '	</div>';
 	echo '	<br>';

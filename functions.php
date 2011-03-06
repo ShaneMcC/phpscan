@@ -1,5 +1,6 @@
 <?php
 	define('ALLOWDELETE', true);
+	define('SOFTDELETE', true);
 
 	function dtaSort($a, $b) {
 		return strnatcmp($a['name'], $b['name']);
@@ -200,10 +201,12 @@
 		
 		foreach ($listing as $item) {
 			if (isset($item['contents'])) {
-				if ($item['name'] != dirname(__FILE__).'/.cache') {
+				if ($item['name'] != dirname(__FILE__).'/.cache' && $item['name'] != dirname(__FILE__).'/deleted') {
 					showItems($item['contents']);
 				}
 			} else {
+				// Preserve full name
+				$fullname = $item['name'];
 				// Remove the base directory name from the file name
 				$name = str_replace(dirname(__FILE__), '', $item['name']);
 				// And any leading slashes
@@ -222,7 +225,10 @@
 					echo '		', $name;
 					echo '	</div>'; */
 					echo '	<div class="actions">';
-					echo '	<a href="ocr.php?img=', $name, '.', $ext, '">View OCR</a>';
+					$ocrs = array();
+					if (file_exists($fullname.'.tesseract.txt')) { $ocrs[] = 'T'; }
+					if (file_exists($fullname.'.gocr.txt')) { $ocrs[] = 'G'; }
+					echo '	<a href="ocr.php?img=', $name, '.', $ext, '">View OCR</a> (', implode('/', $ocrs), ')';
 					if (defined('ALLOWDELETE') && ALLOWDELETE) {
 						echo ' - <a href="delete.php?img=', $name, '.', $ext, '">Delete</a>';
 					}

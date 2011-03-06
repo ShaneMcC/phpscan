@@ -29,7 +29,13 @@
 		echo '<h3>', $file['name'], '<h3>';
 		exec('tesseract '.$file['name'].' '.dirname(__FILE__) . '/' . basename($file['name']). ' 2>&1', $output);
 		rename($file['name'], dirname(__FILE__) . '/' . basename($file['name']));
-		
+
+		exec('convert '.$file['name'].' '.$file['name'].'.temp.jpeg 2>&1', $output);
+		exec('gocr -o '.dirname(__FILE__) . '/' . basename($file['name']).'.gocr.txt '.$file['name'].'.temp.jpeg 2>&1', $output);
+		unlink($file['name'].'.temp.jpeg');
+
+		rename($file['name'], dirname(__FILE__) . '/' . basename($file['name']));
+
 		echo '<pre>';
 		foreach ($output as $line) {
 			echo htmlspecialchars($line), "\n";
