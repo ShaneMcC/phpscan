@@ -1,2 +1,6 @@
 *.txt
 *.tif
+*.pdf
+*.ps
+test/*
+.cache/*
