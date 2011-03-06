@@ -1,0 +1,14 @@
+This is a hacky set of scripts to provide a webbased interface to my scanner.
+
+This was thrown together in about 15-30 minutes, so don't expect anything special, I don't really expect it to work hugely well for anyone else.
+
+Requirements:
+
+- gocr
+- tesseract
+- imagemagick
+- php
+- linux
+
+Optional:
+- sane (to control local scanner. If a networked scanner is in use, just cron doOCR.sh or something.)

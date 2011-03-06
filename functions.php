@@ -1,6 +1,7 @@
 <?php
 	define('ALLOWDELETE', true);
 	define('SOFTDELETE', true);
+	define('LOCALSCANNER', true);
 
 	function dtaSort($a, $b) {
 		return strnatcmp($a['name'], $b['name']);
@@ -169,7 +170,13 @@
 		echo '<div class="head">';
 		echo '<h1>', $title, '</h1>';
 		echo '<div class="links">';
-		echo 'Navigation: <a href="index.php">Home</a> | <a href="newScan.php">Scan Files (ADF, Gray)</a> | <a href="newScan.php?flat">Scan Files (Flatbed, Gray)</a> | <a href="newScan.php?colour">Scan Files (ADF, Colour)</a> | <a href="newScan.php?flat&colour">Scan Files (Flatbed, Colour)</a>';
+		echo 'Navigation: <a href="index.php">Home</a>';
+		if (defined('LOCALSCANNER') && LOCALSCANNER) {
+			echo ' | <a href="newScan.php">Scan Files (ADF, Gray)</a>';
+			echo ' | <a href="newScan.php?flat">Scan Files (Flatbed, Gray)</a>';
+			echo ' | <a href="newScan.php?colour">Scan Files (ADF, Colour)</a>';
+			echo ' | <a href="newScan.php?flat&colour">Scan Files (Flatbed, Colour)</a>';
+		}
 		echo '</div>';
 		echo '<div class="subtext">';
 		echo '<form name="search" action="search.php" method="post">';
@@ -187,7 +194,7 @@
 		echo '</div>';
 		echo '<div class="clear"></div>';
 		echo '<div class="foot">';
-		echo 'Image Viewier (c) 2009 Shane Mc Cormack';
+		echo 'Image Viewier (c) 2009 - ', date('Y'), ' Shane Mc Cormack';
 		echo '</div>';
 		echo '</div>';
 		echo '</body>';
@@ -201,7 +208,7 @@
 		
 		foreach ($listing as $item) {
 			if (isset($item['contents'])) {
-				if ($item['name'] != dirname(__FILE__).'/.cache' && $item['name'] != dirname(__FILE__).'/deleted') {
+				if ($item['name'] != dirname(__FILE__).'/.cache' && $item['name'] != dirname(__FILE__).'/deleted' && $item['name'] != dirname(__FILE__).'/.git') {
 					showItems($item['contents']);
 				}
 			} else {
