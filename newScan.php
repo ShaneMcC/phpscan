@@ -27,10 +27,9 @@
 	foreach ($scanned as $file) {
 		$output = array();
 		echo '<h3>', $file['name'], '<h3>';
-		exec('tesseract '.$file['name'].' '.dirname(__FILE__) . '/' . basename($file['name']). ' 2>&1', $output);
-		rename($file['name'], dirname(__FILE__) . '/' . basename($file['name']));
+		exec('tesseract '.$file['name'].' '.dirname(__FILE__) . '/' . basename($file['name']). '.tesseract 2>&1', $output);
 
-		exec('convert '.$file['name'].' '.$file['name'].'.temp.jpeg 2>&1', $output);
+		exec('convert "'.$file['name'].'" "'.$file['name'].'.temp.jpeg" 2>&1', $output);
 		exec('gocr -o '.dirname(__FILE__) . '/' . basename($file['name']).'.gocr.txt '.$file['name'].'.temp.jpeg 2>&1', $output);
 		unlink($file['name'].'.temp.jpeg');
 

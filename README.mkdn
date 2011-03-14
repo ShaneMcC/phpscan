@@ -11,4 +11,5 @@ Requirements:
 - linux
 
 Optional:
+
 - sane (to control local scanner. If a networked scanner is in use, just cron doOCR.sh or something.)

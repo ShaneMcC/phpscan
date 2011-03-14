@@ -205,6 +205,8 @@
 
 	function showItems($listing) {
 		global $validExts;
+
+		$listing = array_reverse($listing);
 		
 		foreach ($listing as $item) {
 			if (isset($item['contents'])) {
