@@ -1,7 +1,7 @@
 <?php
 	define('ALLOWDELETE', true);
 	define('SOFTDELETE', true);
-	define('LOCALSCANNER', true);
+//	define('LOCALSCANNER', true);
 
 	function dtaSort($a, $b) {
 		return strnatcmp($a['name'], $b['name']);
