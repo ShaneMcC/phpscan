@@ -40,6 +40,8 @@
 			echo htmlspecialchars($line), "\n";
 		}
 		echo '</pre>';
+
+		showItems(array(array('name' => basename($file['name']))));
 	}
 	
 	doFooter();
